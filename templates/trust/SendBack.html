@@ -8,27 +8,10 @@
 {% block content %}
 
     <p>
-    Si fueras el jugador B y recibieras {{tripled_amount}}
+    Te ha tocado ser el comprador. Existe un bien que se transa a 2 distintos precios en el mercado 
+    los cuales son: {{ group.sent_amount }} y 25. 
     </p>
 
-    {% formfields %}
-
-    <p>
-    Si fueras el jugador B y recibieras {{tripled_amount_1}} puntos, ¿cuánto enviarías de vuelta al jugador A?
-    </p>
-    
-    {% formfields %}
-    
-    <p>
-    Si fueras el jugador B y recibieras {{tripled_amount_2}} puntos, ¿cuánto enviarías de vuelta al jugador A?
-    </p>
-        
-    {% formfields %}
-
-    <p>
-    Si fueras el jugador B y recibieras {{tripled_amount_3}} puntos, ¿cuánto enviarías de vuelta al jugador A?
-    </p>
-    
     {% formfields %}
 
     <p>
