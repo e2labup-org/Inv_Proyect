@@ -8,6 +8,7 @@ from otree.api import (
     Currency as c,
     currency_range,
 )
+import random
 
 
 doc = """
@@ -22,59 +23,49 @@ tripled. The trust game was first proposed by
 class Constants(BaseConstants):
     name_in_url = 'trust'
     players_per_group = 2
-    num_rounds = 1
+    num_rounds = 3
 
     instructions_template = 'trust/instructions.html'
 
     # Initial amount allocated to each player
-    endowment = c(5)
-    multiplier = 3
+    endowment_vendedor = c(20)
+    endowment_comprador = c(20)
 
+    #Valor aleatorio del activo
+    num = random.random()
+
+    defectuoso = 1 if num >0.5 else 0
+    asset = 5 if defectuoso == 0 else 15
+
+    asset_value = c(asset)
 
 class Subsession(BaseSubsession):
     pass
 
-
 class Group(BaseGroup):
     sent_amount = models.CurrencyField(
         min=0,
-        max=Constants.endowment,
+        max=c(50),
         doc="""Amount sent by P1""",
-        label="Si fueras el jugador A, ¿cuánto enviarías al jugador B?"
-    )
-    sent_amount_1 = models.CurrencyField(
-        min=0,
-        max=Constants.endowment,
-        doc="""Amount sent by P1""",
-        label="Si fueras el jugador B y recibieras 3 puntos, ¿cuánto enviarías de vuelta al jugador A?"
-    )
-    sent_amount_2 = models.CurrencyField(
-        min=0,
-        max=Constants.endowment,
-        doc="""Amount sent by P1""",
-        label="Si fueras el jugador B y recibieras 6 puntos, ¿cuánto enviarías de vuelta al jugador A?"
-    )
-    sent_amount_3 = models.CurrencyField(
-        min=0,
-        max=Constants.endowment,
-        doc="""Amount sent by P1""",
-        label="Si fueras el jugador B y recibieras 9 puntos, ¿cuánto enviarías de vuelta al jugador A?"
+        label="Monto a VENDER por el activo, sabiendo que el precio de mercado es 10"
     )
 
-    sent_back_amount = models.CurrencyField(doc="""Amount sent back by P2""",min=c(0),label="")
-    #sent_back_amount_1 = models.CurrencyField(doc="""Amount sent back by P2""",min=c(0),label="hola1")
-    ##sent_back_amount_2 = models.CurrencyField(doc="""Amount sent back by P2""",min=c(0),label="hola2")
-    #sent_back_amount_3 = models.CurrencyField(doc="""Amount sent back by P2""",min=c(0),label="hola3")
+    sent_back_amount = models.CurrencyField(doc="""Amount sent back by P2""",
+        min=c(0),
+        max=Constants.endowment_comprador,
+        label="Monto a PAGAR por el activo (indicar un monto si deseas adquirirlo, 0 de otro modo)"
+    )
 
     def sent_back_amount_max(self):
-        return self.sent_amount * Constants.multiplier
+        return self.sent_amount 
     
     def set_payoffs(self):
         p1 = self.get_player_by_id(1)
         p2 = self.get_player_by_id(2)
-        p1.payoff = Constants.endowment - self.sent_amount + self.sent_back_amount
-        p2.payoff = self.sent_amount * Constants.multiplier - self.sent_back_amount
+        p1.payoff = Constants.endowment_vendedor - Constants.asset_value + self.sent_amount #Utilidad del Vendedor
+        p2.payoff =  Constants.endowment_comprador + Constants.asset_value - self.sent_back_amount #Utilidad del comprador
 
 
 class Player(BasePlayer):
     pass
+
