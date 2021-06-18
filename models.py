@@ -8,7 +8,6 @@ from otree.api import (
     Currency as c,
     currency_range,
 )
-import random
 
 
 doc = """
@@ -43,14 +42,14 @@ class Subsession(BaseSubsession):
         self.session.vars['asset'] = asset
 
 class Group(BaseGroup):
-    sent_amount = models.CurrencyField(
+    monto_enviado = models.CurrencyField(
         min=0,
         max=c(50),
         doc="""Amount sent by P1""",
         label="Monto a VENDER por el activo, sabiendo que el precio de mercado es 10"
     )
 
-    sent_back_amount = models.CurrencyField(doc="""Amount sent back by P2""",
+    monto_pago = models.CurrencyField(doc="""Amount sent back by P2""",
         min=c(0),
         max=Constants.endowment_comprador,
         label="Monto a PAGAR por el activo (indicar un monto si deseas adquirirlo, 0 de otro modo)"
@@ -62,8 +61,8 @@ class Group(BaseGroup):
     def set_payoffs(self):
         p1 = self.get_player_by_id(1)
         p2 = self.get_player_by_id(2)
-        p1.payoff = Constants.endowment_vendedor - self.session.vars['asset'] + self.sent_amount #Utilidad del Vendedor
-        p2.payoff =  Constants.endowment_comprador + self.session.vars['asset'] - self.sent_back_amount #Utilidad del comprador
+        p1.payoff = Constants.endowment_vendedor - self.session.vars['asset'] + self.monto_enviado #Utilidad del Vendedor
+        p2.payoff =  Constants.endowment_comprador + self.session.vars['asset'] - self. monto_pago #Utilidad del comprador
 
 
 class Player(BasePlayer):
