@@ -31,14 +31,6 @@ class Constants(BaseConstants):
     endowment_vendedor = c(20)
     endowment_comprador = c(20)
 
-    #Valor aleatorio del activo
-    num = random.random()
-
-    defectuoso = 1 if num >0.5 else 0
-    asset = 5 if defectuoso == 0 else 15
-
-    asset_value = c(asset)
-
 class Subsession(BaseSubsession):
     def creating_session(self):
         import random
