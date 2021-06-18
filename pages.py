@@ -13,7 +13,7 @@ class Vendedor(Page):
     i.e if sent amount by P1 is 5, amount received by P2 is 15"""
 
     form_model = 'group'
-    form_fields = ['sent_amount']
+    form_fields = ['monto_enviado']
     
     def is_displayed(self):
         return self.player.id_in_group == 1
@@ -27,7 +27,7 @@ class Comprador(Page):
     P2 sends back some amount (of the tripled amount received) to P1"""
 
     form_model = 'group'
-    form_fields = ['sent_back_amount']
+    form_fields = ['monto_pago']
     
     def is_displayed(self):
         return self.player.id_in_group == 2
@@ -35,7 +35,7 @@ class Comprador(Page):
     def vars_for_template(self):
 
         return dict(
-            monto_pago=self.group.sent_back_amount,
+            monto_pago=self.monto_pago,
         )
 
 
@@ -45,9 +45,6 @@ class ResultsWaitPage(WaitPage):
 
 class Results(Page):
     """This page displays the earnings of each player"""
-
-    def vars_for_template(self):
-        return dict(tripled_amount=self.group.sent_amount)
 
 
 page_sequence = [
