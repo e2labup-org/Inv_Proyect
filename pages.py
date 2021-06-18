@@ -6,7 +6,7 @@ class Introduction(Page):
     pass
 
 
-class Send(Page):
+class Vendedor(Page):
     """This page is only for P1
     P1 sends amount (all, some, or none) to P2
     This amount is tripled by experimenter,
@@ -22,7 +22,7 @@ class SendBackWaitPage(WaitPage):
     pass
 
 
-class SendBack(Page):
+class Comprador(Page):
     """This page is only for P2
     P2 sends back some amount (of the tripled amount received) to P1"""
 
@@ -52,9 +52,9 @@ class Results(Page):
 
 page_sequence = [
     Introduction,
-    Send,
+    Vendedor,
     SendBackWaitPage,
-    SendBack,
+    Comprador,
     ResultsWaitPage,
     Results,
 ]
