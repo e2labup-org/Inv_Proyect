@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Your Choice
+{% endblock %}
+
+{% block content %}
+
+    <p>
+    Te ha tocado ser el comprador. Existe un bien que se transa a 2 distintos precios en el mercado 
+    los cuales son: {{ group.sent_amount }} y 25. 
+    </p>
+
+    {% formfields %}
+
+    <p>
+    {% next_button %}
+    </p>
+
+    {% include Constants.instructions_template %}
+
+{% endblock %}

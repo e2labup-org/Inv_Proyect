@@ -1,0 +1,36 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Tu Decisión
+{% endblock %}
+
+{% block content %}
+
+{% if asset_value == 5 %} 
+ 
+    <p>
+    Te ha tocado el bien baja calidad, el cual tiene un valor de {{ asset_value }} debido a los fallos, años de uso,
+    trabas en su sistema, etc.
+
+    Depende de ti a qué precio lo venderías sabiendo de que tu dotación inicial es de {{Constants.endowment_vendedor}}. 
+    </p>
+
+    {% formfields %}
+
+{% else %}
+
+    <p>
+    Te ha tocado un bien de alta calidad, el cual tiene un valor de {{ asset_value }}.
+    Depende de ti a qué precio lo venderías sabiendo de que tu dotación inicial es de {{Constants.endowment_vendedor}}.
+    </p>
+
+    {% formfields %}
+    
+{% endif %}
+
+    <p>{% next_button %}</p>
+
+    {% include Constants.instructions_template %}
+
+{% endblock %}
