@@ -17,6 +17,12 @@ class Vendedor(Page):
     
     def is_displayed(self):
         return self.player.id_in_group == 1
+    
+    def vars_for_template(self):
+        
+        return dict(
+                asset_value = self.group.asset_value
+        )
 
 class SendBackWaitPage(WaitPage):
     pass
@@ -35,7 +41,7 @@ class Comprador(Page):
     def vars_for_template(self):
 
         return dict(
-            monto_pago=self.monto_pago,
+            monto_pago=self.group.monto_pago,
         )
 
 
@@ -44,7 +50,12 @@ class ResultsWaitPage(WaitPage):
 
 
 class Results(Page):
-    """This page displays the earnings of each player"""
+    def vars_for_template(self):
+        
+        return dict(
+                asset_value = self.group.asset_value,
+                monto_pago=self.group.monto_pago
+        )
 
 
 page_sequence = [
