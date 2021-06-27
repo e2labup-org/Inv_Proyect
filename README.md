@@ -1,5 +1,7 @@
 
-        Lemon Market
+        Lemon Market based experiment
+        
+        Autores: Sergio Mejía y José Zelaya
         
         Diseño del Experimento: 
         
